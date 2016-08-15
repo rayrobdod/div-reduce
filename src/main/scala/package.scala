@@ -24,10 +24,10 @@ SOFTWARE.
 package com.rayrobdod
 
 package divReduce {
-	case class Settings(
+	final case class Settings(
 	)
 	
-	case class Model(
+	final case class Model(
 		styles:Seq[String] = Nil,
 		scripts:Seq[String] = Nil,
 		divTree:Div = Div()
@@ -35,7 +35,7 @@ package divReduce {
 	
 	abstract sealed trait DivTree
 	
-	case class Div(
+	final case class Div(
 		clazz:String = "",
 		children:Seq[DivTree] = Nil
 	) extends DivTree {
@@ -59,13 +59,14 @@ package divReduce {
 		}
 	}
 	
-	case class Text(
+	final case class Text(
 		value:String
 	) extends DivTree
 }
 
 package object divReduce {
 	
+	/** Read a series of lines in rrd-divreduce format and produce a [[com.rayrobdod.divReduce.Model]] */
 	def parse(in:java.util.Scanner, s:Settings = Settings()):Model = {
 		var retVal:Model = Model();
 		
@@ -99,6 +100,7 @@ package object divReduce {
 		retVal;
 	}
 	
+	/** Convert a model into a string in html format */
 	def toHtml(m:Model, s:Settings = Settings()):String = {
 		"""<!DOCTYPE html>
 		|<html>

@@ -3,7 +3,7 @@
 Have you, as a professional web developer, ever looked at one of your html files
 and wondered why there are so many `<div class="">`? All the divs and classes
 are just biolerplate. The only three html elements a true web dev needs are
-`link type=stylesheet`, `script` and `div`, and as far as a true web develper
+`link type=stylesheet`, `script` and `div`, and as far as a true web developer
 knows, those are the only three html elements that exist. Why use `<img src=''>`
 when `background-image` exists in CSS, and why use `<a href=''>` when emcascript
 has `window.location = ''`? 
@@ -37,13 +37,13 @@ translates into
 ```
 
 Now, unfortunately, there are some things that cannot be performed with divs
-alone. The CSS Generated Content Module is still langishing in development hell,
+alone. The CSS Generated Content Module is still languishing in development hell,
 so text has to be included in the html/divless document. To do so, put quotes
 around the text and indent appropriately. Since there will be many more divs in
 any document than text elements, it makes sense to make text elements more
-verbose. At this time, text is not capable of spanning mulitple lines, but if
+verbose. At this time, text is not capable of spanning multiple lines, but if
 you somehow have a text element longer than a few words, adjacent text lines
-will be concatinated.
+will be concatenated.
 
 ```
 container
@@ -120,7 +120,7 @@ mif-medkit mif-2x fg-green # large, green medkit
 
 Build with [sbt](http://www.scala-sbt.org/). Includes both a standalone console
 runner and a [sbt-web](https://github.com/sbt/sbt-web) plugin. The console
-runner has to command-line inputs, input first, output second. The sbt-web
+runner has two command-line inputs, input first, output second. The sbt-web
 plugin has a task called `divreduce`, and a set of settings scoped to
 `assets:divreduce`, but by default takes files with the 'rrd-divreduce'
 extension and converts each into a html file.
