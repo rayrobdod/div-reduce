@@ -2,13 +2,13 @@
 
 Have you, as a professional web developer, ever looked at one of your html files
 and wondered why there are so many `<div class="">`? All the divs and classes
-are just biolerplate. The only three html elements a true web dev needs are
+are just boilerplate. The only three html elements a true web dev needs are
 `link type=stylesheet`, `script` and `div`, and as far as a true web developer
 knows, those are the only three html elements that exist. Why use `<img src=''>`
 when `background-image` exists in CSS, and why use `<a href=''>` when emcascript
 has `window.location = ''`? 
 
-This project seeks to accomodate true web developers by removing the boilerplate.
+This project seeks to accommodate true web developers by removing the boilerplate.
 Defined within is a lightweight markup syntax that can be preprocessed into
 html. 
 

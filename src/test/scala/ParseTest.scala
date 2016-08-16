@@ -114,5 +114,39 @@ class ParseTest extends FunSpec {
 				))
 			}
 		}
+		it ("Allows same-level index text and div combinations") {
+			assertResult(
+				Model(divTree = Div("", Seq(
+					Div("a", Seq(
+						Text("b"),
+						Div("c"),
+						Text("d")
+					))
+				)))
+			){
+				parse(new Scanner("""
+					|a
+					| "b"
+					| c
+					| "d" """.stripMargin
+				))
+			}
+		}
+		it ("Divs cannot be children of text elements") {
+			assertResult(
+				Model(divTree = Div("", Seq(
+					Div("a", Seq(
+						Text("b"),
+						Div("", Seq(Div("c")))
+					))
+				)))
+			){
+				parse(new Scanner("""
+					|a
+					| "b"
+					|  c""".stripMargin
+				))
+			}
+		}
 	}
 }
