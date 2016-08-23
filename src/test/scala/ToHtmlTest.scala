@@ -31,6 +31,20 @@ class ToHtmlTest extends FunSpec {
 				toHtml(new Model(styles = Seq("style.css")))
 			}
 		}
+		it ("Creates `link rel='stylesheet'` elements in response the model's styles elem (2)") {
+			assertResult("""<!DOCTYPE html>
+			|<html>
+			|<head>
+			|	<link rel='stylesheet' href='style.css' />
+			|	<link rel='stylesheet' href='blarg.css' />
+			|</head>
+			|<body>
+			|	<div />
+			|</body>
+			|</html>""".replace("\r","").stripMargin){
+				toHtml(new Model(styles = Seq("style.css", "blarg.css")))
+			}
+		}
 		it ("Creates `script` elements in response the model's styles elem") {
 			assertResult("""<!DOCTYPE html>
 			|<html>
@@ -42,6 +56,20 @@ class ToHtmlTest extends FunSpec {
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(scripts = Seq("script.js")))
+			}
+		}
+		it ("Creates `script` elements in response the model's styles elem (2)") {
+			assertResult("""<!DOCTYPE html>
+			|<html>
+			|<head>
+			|	<script src='script.js' ></script>
+			|	<script src='blarg.js' ></script>
+			|</head>
+			|<body>
+			|	<div />
+			|</body>
+			|</html>""".replace("\r","").stripMargin){
+				toHtml(new Model(scripts = Seq("script.js", "blarg.js")))
 			}
 		}
 		it ("do the divtree thing") {
