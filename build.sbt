@@ -2,17 +2,22 @@
 // It''s not like this is the canonical reason to have multiple configurations.
 // Although SBT configurations don't seem to support one being a sbt plugin and the others not being a sbt plugin
 
-lazy val shared = project
-	.settings(name := "div-reduce-lib")
+lazy val shared = crossProject.crossType(SharedCrossType)
+	.settings(name := "div-reduce")
 	.settings(mySettings:_*)
 
+// Needed, so sbt finds the projects
+lazy val sharedJVM = shared.jvm
+lazy val sharedJS = shared.js
+
+
 lazy val console = project
-	.dependsOn(shared)
+	.dependsOn(sharedJVM)
 	.settings(name := "div-reduce-console")
 	.settings(mySettings:_*)
 
 lazy val plugin = project
-	.dependsOn(shared)
+	.dependsOn(sharedJVM)
 	.settings(name := "div-reduce-plugin")
 	.settings(mySettings:_*)
 
@@ -23,6 +28,8 @@ lazy val mySettings = Seq(
 	javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked"),
 	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 )
+
+name := "aggregate"
 
 scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
