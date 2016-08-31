@@ -1,24 +1,29 @@
-sbtPlugin := true
+// Why use a configuration when one can have a new project?
+// It''s not like this is the canonical reason to have multiple configurations.
+// Although SBT configurations don't seem to support one being a sbt plugin and the others not being a sbt plugin
 
-name := "div-reduce"
+lazy val shared = project
+	.settings(name := "div-reduce-lib")
+	.settings(mySettings:_*)
 
-organization := "com.rayrobdod"
+lazy val console = project
+	.dependsOn(shared)
+	.settings(name := "div-reduce-console")
+	.settings(mySettings:_*)
 
-organizationHomepage := Some(new URL("http://rayrobdod.name/"))
+lazy val plugin = project
+	.dependsOn(shared)
+	.settings(name := "div-reduce-plugin")
+	.settings(mySettings:_*)
 
-version := "a.0-SNAPSHOT"
-
-javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked")
-
-scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
-
-mainClass in Compile := Some("com.rayrobdod.divReduce.Runner")
-
-addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.0")
+lazy val mySettings = Seq(
+	organization := "com.rayrobdod",
+	organizationHomepage := Some(new URL("http://rayrobdod.name/")),
+	version := "a.0-SNAPSHOT",
+	javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked"),
+	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
+)
 
 scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
-// scalaTest 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test" 
-
-testOptions in Test += Tests.Argument("-oS") 
+crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0-M4")
