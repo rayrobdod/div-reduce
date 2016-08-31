@@ -21,6 +21,12 @@ lazy val plugin = project
 	.settings(name := "div-reduce-plugin")
 	.settings(mySettings:_*)
 
+lazy val webpage = project
+	.enablePlugins(ScalaJSPlugin)
+	.dependsOn(sharedJS)
+	.settings(name := "div-reduce-web")
+	.settings(mySettings:_*)
+
 lazy val mySettings = Seq(
 	organization := "com.rayrobdod",
 	organizationHomepage := Some(new URL("http://rayrobdod.name/")),

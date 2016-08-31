@@ -2,53 +2,54 @@ package com.rayrobdod.divReduce;
 
 import java.util.Scanner
 import org.scalatest.FunSpec;
+import java.util.Arrays.asList
 
 class ParseTest extends FunSpec {
 	
 	describe("divReduce.parse") {
 		it ("produces and empty model for an empty input") {
 			assertResult(Model()){
-				parse(new Scanner(""))
+				parse(asList(""))
 			}
 		}
 		it ("line comments start at a '#' and end at the end of a line") {
 			assertResult(Model()){
-				parse(new Scanner("# This is a comment"))
+				parse(asList("# This is a comment"))
 			}
 		}
 		it ("treats a line prepended with '$' as script files") {
 			assertResult(Model(scripts = Seq("/js/script.js"))){
-				parse(new Scanner("$/js/script.js"))
+				parse(asList("$/js/script.js"))
 			}
 		}
 		it ("treats a second line prepended with '$' as script files") {
 			assertResult(Model(scripts = Seq("/js/script.js", "/js/other.js"))){
-				parse(new Scanner("$/js/script.js\n$/js/other.js"))
+				parse(asList("$/js/script.js","$/js/other.js"))
 			}
 		}
 		it ("treats a line prepended with '!' as style files") {
 			assertResult(Model(styles = Seq("/js/other.js"))){
-				parse(new Scanner("!/js/other.js"))
+				parse(asList("!/js/other.js"))
 			}
 		}
 		it ("line comments can extist on the same line as commands") {
 			assertResult(Model(styles = Seq("/js/script.js"))){
-				parse(new Scanner("!/js/script.js #very important file here"))
+				parse(asList("!/js/script.js #very important file here"))
 			}
 		}
 		it ("lines surrounded by '\"' are treated as text") {
 			assertResult(Model(divTree = Div("", Seq(Text("abcd"))))){
-				parse(new Scanner("\"abcd\""))
+				parse(asList("\"abcd\""))
 			}
 		}
 		it ("lines without decoration are treated as divs") {
 			assertResult(Model(divTree = Div("", Seq(Div("abcd", Nil))))){
-				parse(new Scanner("abcd"))
+				parse(asList("abcd"))
 			}
 		}
 		it ("ignores empty lines") {
 			assertResult(Model()){
-				parse(new Scanner("\n \n  \n\n \n\t\n\t\t\n"))
+				parse(asList("\n \n  \n\n \n\t\n\t\t\n".split("\n"):_*))
 			}
 		}
 		it ("Treats indents as nesting") {
@@ -61,11 +62,11 @@ class ParseTest extends FunSpec {
 					Div("d")
 				)))
 			){
-				parse(new Scanner("""
+				parse(asList("""
 					|a
 					| b
 					| c
-					|d""".stripMargin
+					|d""".stripMargin.replace("\r", "").split("\n"):_*
 				))
 			}
 		}
@@ -80,7 +81,7 @@ class ParseTest extends FunSpec {
 					Div("g", Seq(Div("h"), Div("i")))
 				)))
 			){
-				parse(new Scanner("""
+				parse(asList("""
 					|a
 					| b
 					|  c
@@ -89,7 +90,7 @@ class ParseTest extends FunSpec {
 					|f
 					|g
 					| h
-					| i""".stripMargin
+					| i""".stripMargin.replace("\r", "").split("\n"):_*
 				))
 			}
 		}
@@ -109,8 +110,8 @@ class ParseTest extends FunSpec {
 					)
 				)))
 			){
-				parse(new Scanner("""a
-					b"""
+				parse(asList("""a
+					b""".replace("\r", "").split("\n"):_*
 				))
 			}
 		}
@@ -124,11 +125,11 @@ class ParseTest extends FunSpec {
 					))
 				)))
 			){
-				parse(new Scanner("""
+				parse(asList("""
 					|a
 					| "b"
 					| c
-					| "d" """.stripMargin
+					| "d" """.stripMargin.replace("\r", "").split("\n"):_*
 				))
 			}
 		}
@@ -141,10 +142,10 @@ class ParseTest extends FunSpec {
 					))
 				)))
 			){
-				parse(new Scanner("""
+				parse(asList("""
 					|a
 					| "b"
-					|  c""".stripMargin
+					|  c""".stripMargin.replace("\r", "").split("\n"):_*
 				))
 			}
 		}
