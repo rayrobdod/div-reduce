@@ -23,26 +23,20 @@
 */
 package com.rayrobdod.divReduce
 
-import java.nio.file.{Paths, Files}
-import java.nio.file.StandardOpenOption.CREATE
-import java.nio.charset.StandardCharsets.UTF_8
+import scala.scalajs.js.JSApp
+import org.scalajs.dom.document
+import org.scalajs.dom.raw.HTMLTextAreaElement
 
-object Runner {
-	/**
-	 * @param args[0] the input divreduce file to process
-	 * @param args[1] the location to write the output html file to
-	 */
-	def main(args:Array[String]):Unit = {
-		if (args.length < 2) {
-			System.out.println("java -jar div-reduce.jar <inputfile> <outputfile>")
-		} else {
-			val inputFile = Paths.get(args(0));
-			val outputFile = Paths.get(args(1));
-			
-			val input = Files.readAllLines(inputFile, UTF_8)
-			val output = toHtml(parse(input))
-			Files.createDirectories(outputFile.getParent)
-			Files.write(outputFile, java.util.Arrays.asList[String](output), UTF_8, CREATE)
-		}
+object WebConverter extends JSApp {
+
+	def main(): Unit = {
+		document.getElementById("input").addEventListener("keyup", updateOutput _)
+		updateOutput("?")
+	}
+	
+	def updateOutput(dunno:Any):Unit = {
+		val inText = document.getElementById("input").asInstanceOf[HTMLTextAreaElement].value.split("\n")
+		val outText = toHtml(parse(java.util.Arrays.asList(inText:_*)))
+		document.getElementById("output").textContent = outText
 	}
 }
