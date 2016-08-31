@@ -14,11 +14,11 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 mainClass in Compile := Some("com.rayrobdod.divReduce.Runner")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.2.2")
+addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.0")
 
 scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 // scalaTest 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.5" % "test" 
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test" 
 
 testOptions in Test += Tests.Argument("-oS") 

@@ -8,4 +8,4 @@
   }
 }
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.2.2")
+addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.0")

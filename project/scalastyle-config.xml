@@ -129,4 +129,11 @@ SOFTWARE.
  <check level="warning" class="org.scalastyle.file.NewLineAtEofChecker" enabled="true"></check>
  <check level="warning" class="org.scalastyle.file.NoNewLineAtEofChecker" enabled="false"></check>
  <check level="warning" class="org.scalastyle.scalariform.XmlLiteralChecker" enabled="true" />
+ <check level="warning" class="org.scalastyle.scalariform.TodoCommentChecker" enabled="true">
+  <parameters>
+   <parameter name="words">TODO|FIXME</parameter>
+  </parameters>
+ </check>
+ <check level="warning" class="org.scalastyle.scalariform.ImportGroupingChecker" enabled="false" />
+ <check level="warning" class="org.scalastyle.scalariform.PatternMatchAlignChecker" enabled="false" /> 
 </scalastyle>
