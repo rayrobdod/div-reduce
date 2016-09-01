@@ -1,5 +1,8 @@
 # div-reduce
 
+[![Build Status](https://travis-ci.org/rayrobdod/div-reduce.svg?branch=master)](https://travis-ci.org/rayrobdod/div-reduce)
+
+
 Have you, as a professional web developer, ever looked at one of your html files
 and wondered why there are so many `<div class="">`? All the divs and classes
 are just boilerplate. The only three html elements a true web dev needs are
@@ -118,12 +121,20 @@ mif-medkit mif-2x fg-green # large, green medkit
 
 ## Build Instructions
 
-Build with [sbt](http://www.scala-sbt.org/). Includes both a standalone console
-runner and a [sbt-web](https://github.com/sbt/sbt-web) plugin. The console
-runner has two command-line inputs, input first, output second. The sbt-web
-plugin has a task called `divreduce`, and a set of settings scoped to
-`assets:divreduce`, but by default takes files with the 'rrd-divreduce'
-extension and converts each into a html file.
+Build with [sbt](http://www.scala-sbt.org/).
+
+There are five subprojects.
+* `shared` library sources for scala on the jvm
+* `shared` library sources for scalajs
+* `console` a command-line program which reads a divreduce file and writes a
+  html file
+* `plugin` a [sbt-web](https://github.com/sbt/sbt-web) plugin providing a
+  `divreduce` source file task and a set of options scoped to that task. The
+  default options are to read files in the assets directory with the
+  ".rrd-divreduce" extension and write corresponding html files to the
+  sourceManaged directory
+* `webpage`a demo html page with a textarea that accepts divreduce text and an
+  output that prints the post-conversion html
 
 ## Justification
 
