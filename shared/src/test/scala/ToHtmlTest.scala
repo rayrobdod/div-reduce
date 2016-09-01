@@ -45,6 +45,19 @@ class ToHtmlTest extends FunSpec {
 				toHtml(new Model(styles = Seq("style.css", "blarg.css")))
 			}
 		}
+		it ("Creates `link rel='stylesheet'` elements in response the model's styles elem (escape)") {
+			assertResult("""<!DOCTYPE html>
+			|<html>
+			|<head>
+			|	<link rel='stylesheet' href='style.css?size=12&amp;accent=red' />
+			|</head>
+			|<body>
+			|	<div />
+			|</body>
+			|</html>""".replace("\r","").stripMargin){
+				toHtml(new Model(styles = Seq("style.css?size=12&accent=red")))
+			}
+		}
 		it ("Creates `script` elements in response the model's styles elem") {
 			assertResult("""<!DOCTYPE html>
 			|<html>
@@ -70,6 +83,19 @@ class ToHtmlTest extends FunSpec {
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(scripts = Seq("script.js", "blarg.js")))
+			}
+		}
+		it ("Creates `script` elements in response the model's styles elem (escape)") {
+			assertResult("""<!DOCTYPE html>
+			|<html>
+			|<head>
+			|	<script src='&lt;canvas&gt;.js' ></script>
+			|</head>
+			|<body>
+			|	<div />
+			|</body>
+			|</html>""".replace("\r","").stripMargin){
+				toHtml(new Model(scripts = Seq("<canvas>.js")))
 			}
 		}
 		it ("do the divtree thing") {
@@ -102,6 +128,24 @@ class ToHtmlTest extends FunSpec {
 					)),
 					Div("f"),
 					Div("g", Seq(Text("h"), Div("i")))
+				))))
+			}
+		}
+		it ("escapes xml characters in class names or raw text") {
+			assertResult("""<!DOCTYPE html>
+			|<html>
+			|<head>
+			|</head>
+			|<body>
+			|	<div>
+			|		<div class='&lt;&quot;&amp;&apos;&gt;'>
+			|			&lt;&quot;&amp;&apos;&gt;
+			|		</div>
+			|	</div>
+			|</body>
+			|</html>""".replace("\r","").stripMargin){
+				toHtml(new Model(divTree = Div("", Seq(
+					Div("<\"&'>", Seq(Text("<\"&'>")))
 				))))
 			}
 		}
