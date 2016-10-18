@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>divreduce conversion demo</title>
+		<style>
+body, h1 {margin:0;padding:0;}
+h1 {margin-bottom: 0.5em;}
+body {display:-ms-flexbox; display:flex;}
+body > section {padding:1em; margin:0; }
+output {font-family :monospace;}
+
+@media(min-width: 60em) {
+	body > section {display:inline-block; width:calc(50% - 2em - 3px); vertical-align: top;}
+	body > section:not(:first-child) {border-left: 1px solid black;}
+}
+@media(max-width: 60em) {
+	body {flex-direction: column; -ms-flex-direction:column;}
+	body > section:not(:first-child) {border-top: 1px solid black;}
+}
+		</style>
+	</head>
+	<body>
+		<section id="inputSection">
+			<h1>Input (div-reduce)</h2>
+			<textarea id="input" rows="30" cols="50">$style.css
+page
+	h1
+		"title"
+	p
+		"Ipsum lorum"
+		"dolor amet"
+	p
+		"haha burn"
+		mif-earth mif-2x fg-green
+		"gona need that"
+</textarea>
+		</section>
+		<section id="outputSection">
+			<h1>Output (html)</h2>
+			<output id="output" for="input" style="white-space:pre;">
+				You may have scripting disabled
+			</output>
+		</section>
+		
+		<script type="text/javascript" src="./script.js"></script>
+		<script type="text/javascript">
+			com.rayrobdod.divReduce.WebConverter().main();
+		</script>
+	</body>
+</html>
