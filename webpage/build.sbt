@@ -9,6 +9,8 @@ scalastyleConfig := baseDirectory.value / ".." / "project" / "scalastyle-config.
 
 watchSources += ((sourceDirectory in Compile).value / "html" / "index.html")
 
+scalaJSUseMainModuleInitializer := true
+
 val webStage = taskKey[Seq[File]]("")
 
 target in webStage := target.value / "web" / "stage"

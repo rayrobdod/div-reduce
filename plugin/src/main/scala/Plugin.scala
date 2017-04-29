@@ -95,7 +95,7 @@ object Plugin extends AutoPlugin {
 				outputFile.toFile
 			}.filter{_ != null}
 		},
-		sourceGenerators in Assets <+= divreduce in Assets
+		sourceGenerators in Assets += (divreduce in Assets).taskValue
 	)
 	
 	override def requires = SbtWeb

@@ -29,9 +29,11 @@ import org.scalajs.dom.raw.HTMLTextAreaElement
 
 object WebConverter extends JSApp {
 
-	def main(): Unit = {
-		document.getElementById("input").addEventListener("keyup", updateOutput _)
-		updateOutput("?")
+	override def main():Unit = {
+		document.addEventListener("DOMContentLoaded", {(x:Any) =>
+			document.getElementById("input").addEventListener("keyup", updateOutput _)
+			updateOutput("?")
+		})
 	}
 	
 	def updateOutput(dunno:Any):Unit = {
