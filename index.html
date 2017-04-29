@@ -8,7 +8,7 @@ body, h1 {margin:0;padding:0;}
 h1 {margin-bottom: 0.5em;}
 body {display:-ms-flexbox; display:flex;}
 body > section {padding:1em; margin:0; }
-output {font-family :monospace;}
+output {font-family: monospace;}
 
 @media(min-width: 60em) {
 	body > section {display:inline-block; width:calc(50% - 2em - 3px); vertical-align: top;}
@@ -19,6 +19,7 @@ output {font-family :monospace;}
 	body > section:not(:first-child) {border-top: 1px solid black;}
 }
 		</style>
+		<script type="text/javascript" src="./script.js"></script>
 	</head>
 	<body>
 		<section id="inputSection">
@@ -42,10 +43,5 @@ page
 				You may have scripting disabled
 			</output>
 		</section>
-		
-		<script type="text/javascript" src="./script.js"></script>
-		<script type="text/javascript">
-			com.rayrobdod.divReduce.WebConverter().main();
-		</script>
 	</body>
 </html>
