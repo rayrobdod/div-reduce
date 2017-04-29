@@ -1,6 +1,5 @@
 package com.rayrobdod.divReduce;
 
-import java.util.Scanner
 import org.scalatest.FunSpec;
 
 class ToHtmlTest extends FunSpec {
