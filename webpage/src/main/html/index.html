@@ -4,44 +4,49 @@
 		<meta charset="UTF-8">
 		<title>divreduce conversion demo</title>
 		<style>
-body, h1 {margin:0;padding:0;}
+body, h1 {margin: 0; padding: 0;}
 h1 {margin-bottom: 0.5em;}
-body {display:-ms-flexbox; display:flex;}
-body > section {padding:1em; margin:0; }
-output {font-family: monospace;}
+body {display: flex;}
+body > section {padding: 1em; margin: 0; display: flex; flex-direction: column;}
+output {font-family: monospace; white-space: pre; border: 1px solid black;}
+textarea, output {display: block; width: 100%; margin: 0; padding: 2px; tab-size: 4;}
 
 @media(min-width: 60em) {
-	body > section {display:inline-block; width:calc(50% - 2em - 3px); vertical-align: top;}
+	html, body {height: 100%;}
+	body > section {width: calc(50% - 2em - 3px); flex-grow: 1;}
 	body > section:not(:first-child) {border-left: 1px solid black;}
+	textarea, output {overflow: scroll; height: 100%;}
 }
 @media(max-width: 60em) {
-	body {flex-direction: column; -ms-flex-direction:column;}
+	body {flex-direction: column;}
 	body > section:not(:first-child) {border-top: 1px solid black;}
+	textarea, output {overflow-x: scroll;}
 }
 		</style>
 		<script type="text/javascript" src="./script.js"></script>
 	</head>
 	<body>
 		<section id="inputSection">
-			<h1>Input (div-reduce)</h2>
-			<textarea id="input" rows="30" cols="50">$style.css
+			<h1>Input (div-reduce)</h1>
+			<textarea id="input" rows="20" cols="50">!style.css
+$script.js
 page
-	h1
+	header
 		"title"
-	p
+	paragraph
 		"Ipsum lorum"
 		"dolor amet"
-	p
+	paragraph
 		"haha burn"
 		mif-earth mif-2x fg-green
 		"gona need that"
 </textarea>
 		</section>
 		<section id="outputSection">
-			<h1>Output (html)</h2>
-			<output id="output" for="input" style="white-space:pre;">
-				You may have scripting disabled
-			</output>
+			<h1>Output (html)</h1>
+			<output id="output" for="input">
+You may have scripting disabled
+</output>
 		</section>
 	</body>
 </html>
