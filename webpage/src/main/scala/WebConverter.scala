@@ -23,13 +23,12 @@
 */
 package com.rayrobdod.divReduce
 
-import scala.scalajs.js.JSApp
 import org.scalajs.dom.document
 import org.scalajs.dom.raw.HTMLTextAreaElement
 
-object WebConverter extends JSApp {
+object WebConverter {
 
-	override def main():Unit = {
+	def main(args:Array[String]):Unit = {
 		document.addEventListener("DOMContentLoaded", {(x:Any) =>
 			document.getElementById("input").addEventListener("keyup", updateOutput _)
 			updateOutput("?")

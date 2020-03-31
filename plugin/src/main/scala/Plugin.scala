@@ -51,11 +51,9 @@ object Functions {
 		} else {
 			if (res.isDirectory) {sys.error("result was directory; source was not")}
 			else {
-				if (exp.length != res.length) {sys.error("source and result file have different contents: " + exp)}
-		
-				val expBytes = sbt.IO.readBytes(exp)
-				val resBytes = sbt.IO.readBytes(res)
-				if (expBytes.toList != resBytes.toList) {sys.error("source and result file have different contents: ")}
+				val expLines = java.nio.file.Files.readAllLines(exp.toPath)
+				val resLines = java.nio.file.Files.readAllLines(res.toPath)
+				if (expLines != resLines) {sys.error("source and result file have different contents: ")}
 				
 				// else, OK
 			}

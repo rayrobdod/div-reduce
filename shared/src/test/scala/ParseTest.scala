@@ -1,9 +1,9 @@
 package com.rayrobdod.divReduce;
 
-import org.scalatest.FunSpec;
+import org.scalatest.funspec.AnyFunSpec
 import java.util.Arrays.asList
 
-class ParseTest extends FunSpec {
+class ParseTest extends AnyFunSpec {
 	
 	describe("divReduce.parse") {
 		it ("produces and empty model for an empty input") {

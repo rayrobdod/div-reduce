@@ -1,8 +1,8 @@
 package com.rayrobdod.divReduce;
 
-import org.scalatest.FunSpec;
+import org.scalatest.funspec.AnyFunSpec
 
-class ToHtmlTest extends FunSpec {
+class ToHtmlTest extends AnyFunSpec {
 	
 	describe("divReduce.toHtml") {
 		it ("Produces an empty html document for an empty document") {

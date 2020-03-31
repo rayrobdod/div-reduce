@@ -1,21 +1,17 @@
 version := "0.1"
 
 TaskKey[Unit]("assertResults") in divreduce in Assets := {
-	import java.io._
-	
-	val res = sbt.IO.readBytes((target in divreduce in Assets).value / "single.html")
-	val exp = sbt.IO.readBytes((resourceDirectory in Assets).value / "expected.html")
-	assert(res.size == exp.size)
-	assert(res.zip(exp).forall{x => x._1 == x._2})
+	com.rayrobdod.divReduce.Functions.assertFileContentsEquals(
+		(target in divreduce in Assets).value / "single.html",
+		(resourceDirectory in Assets).value / "expected.html",
+	)
 }
 
 TaskKey[Unit]("assertResults") in WebKeys.stage := {
-	import java.io._
-	
-	val res = sbt.IO.readBytes(WebKeys.stagingDirectory.value / "single.html")
-	val exp = sbt.IO.readBytes(WebKeys.stagingDirectory.value / "expected.html")
-	assert(res.size == exp.size)
-	assert(res.zip(exp).forall{x => x._1 == x._2})
+	com.rayrobdod.divReduce.Functions.assertFileContentsEquals(
+		WebKeys.stagingDirectory.value / "single.html",
+		WebKeys.stagingDirectory.value / "expected.html",
+	)
 }
 
 lazy val root = (project in file(".")).enablePlugins(SbtWeb)

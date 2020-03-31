@@ -7,5 +7,3 @@
     addSbtPlugin("com.rayrobdod" % "div-reduce-plugin" % pluginVersion)
   }
 }
-
-addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.0")
