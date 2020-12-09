@@ -1,6 +1,6 @@
 # div-reduce
 
-[![Build Status](https://travis-ci.org/rayrobdod/div-reduce.svg?branch=master)](https://travis-ci.org/rayrobdod/div-reduce)
+![Build Status](https://github.com/rayrobdod/div-reduce/workflows/Run%20Tests/badge.svg)
 
 
 Have you, as a professional web developer, ever looked at one of your html files
