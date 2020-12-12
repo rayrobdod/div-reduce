@@ -26,6 +26,7 @@ lazy val plugin = project
 	)
 
 lazy val webpage = project
+	.enablePlugins(GhpagesPlugin)
 	.enablePlugins(ScalaJSPlugin)
 	.dependsOn(shared.js)
 	.settings(name := "div-reduce-web")
@@ -51,6 +52,10 @@ lazy val webpage = project
 				tarFile
 			}
 		},
+	)
+	.settings(
+		(ghpagesSynchLocal / mappings) := (webStage / mappings).value,
+		ghpagesCommitOptions := Seq("-m", s"Render of ${git.gitHeadCommit.value.get}")
 	)
 
 lazy val mySettings = Seq(
