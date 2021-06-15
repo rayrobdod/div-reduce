@@ -107,8 +107,8 @@ package object divReduce {
 		|<html>
 		|<head>
 		|""".replace("\r","").stripMargin +
-		m.styles.map{x => "\t<link rel='stylesheet' href='" + x.flatMap{htmlEscape} + "' />\n"}.mkString("", "", "") +
-		m.scripts.map{x => "\t<script src='" + x.flatMap{htmlEscape} + "' ></script>\n"}.mkString("", "", "") +
+		m.styles.map({_.flatMap(htmlEscape).mkString("\t<link rel='stylesheet' href='", "", "' />\n")}).mkString("", "", "") +
+		m.scripts.map({_.flatMap(htmlEscape).mkString("\t<script src='", "", "' ></script>\n")}).mkString("", "", "") +
 		"</head>\n<body>\n" +
 		toHtml(m.divTree, "\t", s) +
 		"</body>\n</html>"
@@ -117,14 +117,14 @@ package object divReduce {
 	private[this] def toHtml(d:Div, indent:String, s:Settings):String = {
 		indent +
 		"<div" +
-		(if (d.clazz != "") {" class='" + d.clazz.flatMap{htmlEscape} + "'"} else {""}) +
+		(if (d.clazz != "") {d.clazz.flatMap(htmlEscape).mkString(" class='", "", "'")} else {""}) +
 		(if (d.children.isEmpty) {
 			" />"
 		} else {
 			">\n" +
 			d.children.map{x => x match {
-				case Text(str) => indent + "\t" + str.flatMap{htmlEscape} + "\n"
-				case x:Div => toHtml(x, indent + "\t", s)
+				case Text(str) => str.flatMap(htmlEscape).mkString(indent + "\t", "", "\n")
+				case x:Div => toHtml(x, indent + "\t", s).mkString
 			}}.mkString("", "", "") +
 			indent +
 			"</div>"
@@ -132,7 +132,7 @@ package object divReduce {
 		"\n"
 	}
 	
-	private[this] val htmlEscape:Function1[Char, Seq[Char]] = {c:Char => c match {
+	private[this] val htmlEscape:Function1[Char, Seq[Char]] = {(c:Char) => c match {
 		case '\"' => "&quot;"
 		case '\'' => "&apos;"
 		case '&' => "&amp;"

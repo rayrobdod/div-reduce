@@ -68,32 +68,32 @@ object Plugin extends AutoPlugin {
 	}
 	import autoImport._
 	override lazy val projectSettings = Seq(
-		(sourceDirectory in divreduce in Assets) := (sourceDirectory in Assets).value,
-		(target in divreduce in Assets) := (sourceManaged in Assets).value,
-		includeFilter in divreduce in Assets := {
+		Assets / divreduce / sourceDirectory := (Assets / sourceDirectory).value,
+		Assets / divreduce / target := (Assets / sourceManaged).value,
+		Assets / divreduce / includeFilter := {
 			new FileFilter{
 				def accept(f:File) = (f.toString endsWith ".rrd-divreduce")
 			}
 		},
-		sources in divreduce in Assets := {
-			(sourceDirectory in divreduce in Assets).value **
-					((includeFilter in divreduce in Assets).value --
-					(excludeFilter in divreduce in Assets).value)
+		Assets / divreduce / sources := {
+			(Assets / divreduce / sourceDirectory).value **
+					((Assets / divreduce / includeFilter).value --
+					(Assets / divreduce / excludeFilter).value)
 		}.get,
-		(divreduce in Assets) := {
-			(sources in divreduce in Assets).value.map{fileName:File =>
-				val baseDir = (sourceDirectory in divreduce in Assets).value.toPath
+		(Assets / divreduce) := {
+			(Assets / divreduce / sources).value.map{fileName:File =>
+				val baseDir = (Assets / divreduce / sourceDirectory).value.toPath
 				
 				val input = Files.readAllLines(fileName.toPath, UTF_8)
 				val output = toHtml(parse(input))
-				val outputFile = new File((target in divreduce in Assets).value, IO.split(IO.relativize(baseDir.toFile, fileName).get)._1 + ".html").toPath
+				val outputFile = new File((Assets / divreduce / target).value, IO.split(IO.relativize(baseDir.toFile, fileName).get)._1 + ".html").toPath
 				
 				IO.createDirectory(outputFile.toFile.getParentFile)
 				Files.write(outputFile, java.util.Arrays.asList(output), UTF_8, CREATE)
 				outputFile.toFile
 			}.filter{_ != null}
 		},
-		sourceGenerators in Assets += (divreduce in Assets).taskValue
+		Assets / sourceGenerators += (Assets / divreduce).taskValue
 	)
 	
 	override def requires = SbtWeb

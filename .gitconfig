@@ -1,0 +1,2 @@
+[filter "sort"]
+	clean = LC_ALL=C sort

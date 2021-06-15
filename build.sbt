@@ -1,22 +1,51 @@
-val webStage = taskKey[Seq[File]]("")
+ThisBuild / version := "1.0-SNAPSHOT"
+ThisBuild / organization := "com.rayrobdod"
+ThisBuild / organizationHomepage := Some(new URL("http://rayrobdod.name/"))
+ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
-lazy val shared = crossProject(JSPlatform, JVMPlatform).crossType(CrossType.Pure)
+val webStage = taskKey[Seq[File]]("Create a local directory with all the files laid out as they would be in the final distribution.")
+val scala210Version = "2.10.7"
+val scala211Version = "2.11.12"
+val scala212Version = "2.12.14"
+val scala213Version = "2.13.6"
+val scala3Version = "3.0.0"
+
+lazy val testSettings = Seq(
+	libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % "test",
+)
+
+lazy val shared = (projectMatrix in file("shared"))
 	.settings(name := "div-reduce")
-	.settings(mySettings:_*)
 	.settings(testSettings:_*)
-	.settings(crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.11"))
+	.jvmPlatform(scalaVersions = Seq(
+		scala210Version,
+		scala211Version,
+		scala212Version,
+		scala213Version,
+		scala3Version,
+	))
+	.jsPlatform(scalaVersions = Seq(
+		scala211Version,
+		scala212Version,
+		scala213Version,
+		scala3Version,
+	))
 
-lazy val console = project
-	.dependsOn(shared.jvm)
+lazy val console = (projectMatrix in file("console"))
+	.dependsOn(shared)
 	.settings(name := "div-reduce-console")
-	.settings(mySettings:_*)
-	.settings(crossScalaVersions := Seq("2.10.7", "2.11.12", "2.12.11"))
+	.jvmPlatform(scalaVersions = Seq(
+		scala210Version,
+		scala211Version,
+		scala212Version,
+		scala213Version,
+		scala3Version,
+	))
 
 lazy val plugin = project
 	.enablePlugins(SbtPlugin)
-	.dependsOn(shared.jvm)
+	.dependsOn(shared.jvm(scala212Version))
 	.settings(name := "div-reduce-plugin")
-	.settings(mySettings:_*)
 	.settings(
 		addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.4"),
 		scriptedLaunchOpts := { scriptedLaunchOpts.value ++
@@ -25,15 +54,13 @@ lazy val plugin = project
 		scriptedBufferLog := false,
 	)
 
-lazy val webpage = project
-	.enablePlugins(GhpagesPlugin)
+lazy val webpage = (projectMatrix in file("webpage"))
 	.enablePlugins(ScalaJSPlugin)
-	.dependsOn(shared.js)
+	.dependsOn(shared)
 	.settings(name := "div-reduce-web")
-	.settings(mySettings:_*)
 	.settings(
-		libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "1.0.0",
-		watchSources += (sourceDirectory in Compile).value / "html" / "index.html",
+		libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "1.1.0",
+		watchSources += (Compile / sourceDirectory).value / "html" / "index.html",
 		scalaJSUseMainModuleInitializer := true,
 		(webStage / mappings) := Seq(
 			(Compile / fullOptJS).value.data -> "script.js",
@@ -46,29 +73,19 @@ lazy val webpage = project
 			val tarDir = (webStage / target).value
 			Files. createDirectories(tarDir.toPath)
 
-			(mappings in webStage).value.map{case (srcFile, name) =>
+			(webStage / mappings).value.map{case (srcFile, name) =>
 				val tarFile = tarDir / name
 				Files.copy(srcFile.toPath, tarFile.toPath, COPY_ATTRIBUTES, REPLACE_EXISTING)
 				tarFile
 			}
 		},
 	)
-	.settings(
-		(ghpagesSynchLocal / mappings) := (webStage / mappings).value,
-		ghpagesCommitOptions := Seq("-m", s"Render of ${git.gitHeadCommit.value.get}")
-	)
-
-lazy val mySettings = Seq(
-	organization := "com.rayrobdod",
-	organizationHomepage := Some(new URL("http://rayrobdod.name/")),
-	version := "1.0-SNAPSHOT",
-	javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked"),
-	scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
-)
-
-lazy val testSettings = Seq(
-	libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.1" % "test",
-	(Test / testOptions) += Tests.Argument("-oS"),
-)
+	.jsPlatform(scalaVersions = Seq(
+		scala212Version,
+		scala213Version,
+	))
 
 name := "aggregate"
+enablePlugins(GhpagesPlugin)
+ghpagesSynchLocal / mappings := (webpage.js(scala213Version) / webStage / mappings).value
+ghpagesCommitOptions := Seq("-m", s"Render of ${git.gitHeadCommit.value.get}")
