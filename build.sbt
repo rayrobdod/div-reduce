@@ -86,6 +86,3 @@ lazy val webpage = (projectMatrix in file("webpage"))
 	))
 
 name := "aggregate"
-enablePlugins(GhpagesPlugin)
-ghpagesSynchLocal / mappings := (webpage.js(scala213Version) / webStage / mappings).value
-ghpagesCommitOptions := Seq("-m", s"Render of ${git.gitHeadCommit.value.get}")
