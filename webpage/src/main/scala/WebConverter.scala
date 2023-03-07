@@ -24,7 +24,7 @@
 package com.rayrobdod.divReduce
 
 import org.scalajs.dom.document
-import org.scalajs.dom.raw.HTMLTextAreaElement
+import org.scalajs.dom.HTMLTextAreaElement
 
 object WebConverter {
 

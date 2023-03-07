@@ -6,12 +6,12 @@ ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 val webStage = taskKey[Seq[File]]("Create a local directory with all the files laid out as they would be in the final distribution.")
 val scala210Version = "2.10.7"
 val scala211Version = "2.11.12"
-val scala212Version = "2.12.14"
-val scala213Version = "2.13.6"
-val scala3Version = "3.0.0"
+val scala212Version = "2.12.17"
+val scala213Version = "2.13.10"
+val scala3Version = "3.2.2"
 
 lazy val testSettings = Seq(
-	libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % "test",
+	libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.15" % "test",
 )
 
 lazy val shared = (projectMatrix in file("shared"))
@@ -25,7 +25,6 @@ lazy val shared = (projectMatrix in file("shared"))
 		scala3Version,
 	))
 	.jsPlatform(scalaVersions = Seq(
-		scala211Version,
 		scala212Version,
 		scala213Version,
 		scala3Version,
@@ -49,7 +48,7 @@ lazy val plugin = project
 	.settings(
 		addSbtPlugin("com.typesafe.sbt" % "sbt-web" % "1.4.4"),
 		scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-			Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value)
+			Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
 		},
 		scriptedBufferLog := false,
 	)
@@ -59,7 +58,7 @@ lazy val webpage = (projectMatrix in file("webpage"))
 	.dependsOn(shared)
 	.settings(name := "div-reduce-web")
 	.settings(
-		libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "1.1.0",
+		libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.4.0",
 		watchSources += (Compile / sourceDirectory).value / "html" / "index.html",
 		scalaJSUseMainModuleInitializer := true,
 		(webStage / mappings) := Seq(
@@ -83,6 +82,7 @@ lazy val webpage = (projectMatrix in file("webpage"))
 	.jsPlatform(scalaVersions = Seq(
 		scala212Version,
 		scala213Version,
+		scala3Version,
 	))
 
 name := "aggregate"

@@ -1,13 +1,13 @@
 version := "0.1"
 
-TaskKey[Unit]("assertResults") in divreduce in Assets := {
+Assets / divreduce / TaskKey[Unit]("assertResults") := {
 	com.rayrobdod.divReduce.Functions.assertFileContentsEquals(
-		(target in divreduce in Assets).value / "empty.html",
-		(resourceDirectory in Assets).value / "expected.html",
+		(Assets / divreduce / target).value / "empty.html",
+		(Assets / resourceDirectory).value / "expected.html",
 	)
 }
 
-TaskKey[Unit]("assertResults") in WebKeys.stage := {
+WebKeys.stage / TaskKey[Unit]("assertResults") := {
 	com.rayrobdod.divReduce.Functions.assertFileContentsEquals(
 		WebKeys.stagingDirectory.value / "empty.html",
 		WebKeys.stagingDirectory.value / "expected.html",

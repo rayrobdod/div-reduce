@@ -1,7 +1,7 @@
-> web-assets:divreduce
+> Assets / divreduce
 $ exists target/web/assets-managed/main/empty.html
-> web-assets:divreduce::assertResults
+> Assets / divreduce / assertResults
 
 > webStage
 $ exists target/web/stage/empty.html
-> webStage::assertResults
+> webStage / assertResults
