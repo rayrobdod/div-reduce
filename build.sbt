@@ -6,12 +6,12 @@ ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 val webStage = taskKey[Seq[File]]("Create a local directory with all the files laid out as they would be in the final distribution.")
 val scala210Version = "2.10.7"
 val scala211Version = "2.11.12"
-val scala212Version = "2.12.17"
-val scala213Version = "2.13.10"
-val scala3Version = "3.2.2"
+val scala212Version = "2.12.21"
+val scala213Version = "2.13.18"
+val scala3Version = "3.3.9"
 
 lazy val testSettings = Seq(
-	libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.15" % "test",
+	libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.20" % "test",
 )
 
 lazy val shared = (projectMatrix in file("shared"))
