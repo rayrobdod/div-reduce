@@ -11,7 +11,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|<head>
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model())
@@ -24,7 +24,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<link rel='stylesheet' href='style.css' />
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(styles = Seq("style.css")))
@@ -38,7 +38,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<link rel='stylesheet' href='blarg.css' />
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(styles = Seq("style.css", "blarg.css")))
@@ -51,7 +51,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<link rel='stylesheet' href='style.css?size=12&amp;accent=red' />
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(styles = Seq("style.css?size=12&accent=red")))
@@ -64,7 +64,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<script src='script.js' ></script>
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(scripts = Seq("script.js")))
@@ -78,7 +78,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<script src='blarg.js' ></script>
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(scripts = Seq("script.js", "blarg.js")))
@@ -91,7 +91,7 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<script src='&lt;canvas&gt;.js' ></script>
 			|</head>
 			|<body>
-			|	<div />
+			|	<div></div>
 			|</body>
 			|</html>""".replace("\r","").stripMargin){
 				toHtml(new Model(scripts = Seq("<canvas>.js")))
@@ -106,16 +106,16 @@ class ToHtmlTest extends AnyFunSpec {
 			|	<div>
 			|		<div class='a'>
 			|			<div class='b'>
-			|				<div class='c' />
+			|				<div class='c'></div>
 			|			</div>
 			|			<div class='d'>
 			|				e
 			|			</div>
 			|		</div>
-			|		<div class='f' />
+			|		<div class='f'></div>
 			|		<div class='g'>
 			|			h
-			|			<div class='i' />
+			|			<div class='i'></div>
 			|		</div>
 			|	</div>
 			|</body>

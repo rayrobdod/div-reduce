@@ -118,18 +118,16 @@ package object divReduce {
 		indent +
 		"<div" +
 		(if (d.clazz != "") {d.clazz.flatMap(htmlEscape).mkString(" class='", "", "'")} else {""}) +
-		(if (d.children.isEmpty) {
-			" />"
-		} else {
-			">\n" +
+		">" +
+		(if (d.children.isEmpty) {""} else {
+			"\n" +
 			d.children.map{x => x match {
 				case Text(str) => str.flatMap(htmlEscape).mkString(indent + "\t", "", "\n")
 				case x:Div => toHtml(x, indent + "\t", s).mkString
 			}}.mkString("", "", "") +
-			indent +
-			"</div>"
+			indent
 		}) +
-		"\n"
+		"</div>\n"
 	}
 	
 	private[this] val htmlEscape:Function1[Char, Seq[Char]] = {(c:Char) => c match {

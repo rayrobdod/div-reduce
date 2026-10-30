@@ -33,8 +33,8 @@ translates into
 ```html
 <div class="table">
 	<div class="row">
-		<div class="cell label" />
-		<div class="cell" />
+		<div class="cell label"></div>
+		<div class="cell"></div>
 	</div>
 </div>
 ```
