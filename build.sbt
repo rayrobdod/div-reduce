@@ -1,6 +1,6 @@
 ThisBuild / version := "1.0-SNAPSHOT"
 ThisBuild / organization := "com.rayrobdod"
-ThisBuild / organizationHomepage := Some(new URL("http://rayrobdod.name/"))
+ThisBuild / organizationHomepage := Some(new URI("http://rayrobdod.name/").toURL)
 ThisBuild / scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 val webStage = taskKey[Seq[File]]("Create a local directory with all the files laid out as they would be in the final distribution.")
