@@ -116,7 +116,7 @@ mif-medkit mif-2x fg-green # large, green medkit
 ```
 
 ```html
-<div class="mif-earth mif-2x fg-green" />
+<div class="mif-earth mif-2x fg-green"></div>
 ```
 
 ## Build Instructions
